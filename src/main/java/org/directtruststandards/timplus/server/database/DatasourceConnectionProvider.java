@@ -1,14 +1,13 @@
-package com.cerner.healthe.direct.im.database;
+package org.directtruststandards.timplus.server.database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.directtruststandards.timplus.server.springconfig.XMPPServerConfig;
 import org.jivesoftware.database.ConnectionProvider;
 import org.springframework.context.ApplicationContext;
-
-import com.cerner.healthe.direct.im.springconfig.XMPPServerConfig;
 
 public class DatasourceConnectionProvider implements ConnectionProvider
 {

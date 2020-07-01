@@ -41,7 +41,7 @@
     <oneTimeAccessToken>secretToken</oneTimeAccessToken>
     -->
     <connectionProvider> 
-      <className>com.cerner.healthe.direct.im.database.DatasourceConnectionProvider</className> 
+      <className>org.directtruststandards.timplus.server.database.DatasourceConnectionProvider</className> 
     </connectionProvider>    
     <setup>true</setup>      
 </jive>

@@ -1,4 +1,4 @@
-package com.cerner.healthe.direct.im.springconfig;
+package org.directtruststandards.timplus.server.springconfig;
 
 import java.io.File;
 import java.net.URL;
@@ -7,20 +7,42 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.directtruststandards.timplus.monitor.condition.TxReleaseStrategy;
+import org.directtruststandards.timplus.monitor.condition.TxTimeoutCondition;
+import org.directtruststandards.timplus.monitor.impl.DefaultTxParser;
+import org.directtruststandards.timplus.monitor.spring.RouteComponents;
+import org.directtruststandards.timplus.monitor.spring.ScheduledRouteReaper;
+import org.directtruststandards.timplus.server.monitor.EmbeddedServerPacketMonitor;
+import org.directtruststandards.timplus.server.monitor.RemoteGroupChatCache;
+import org.directtruststandards.timplus.server.monitor.PacketMonitor;
+import org.jivesoftware.openfire.OfflineMessageStrategy;
 import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.admin.AdminManager;
 import org.jivesoftware.openfire.domain.DomainManager;
+import org.jivesoftware.openfire.interceptor.InterceptorManager;
 import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserManager;
 import org.jivesoftware.util.JiveGlobals;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.integration.aggregator.CorrelationStrategy;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.channel.QueueChannel;
+import org.springframework.integration.dsl.IntegrationFlow;
+import org.springframework.integration.dsl.IntegrationFlows;
+import org.springframework.integration.dsl.MessageChannels;
+import org.springframework.integration.store.MessageGroupStore;
+import org.springframework.integration.support.locks.LockRegistry;
+import org.springframework.integration.transformer.Transformer;
+import org.springframework.messaging.MessageChannel;
 
 @Configuration
 public class XMPPServerConfig
@@ -46,7 +68,7 @@ public class XMPPServerConfig
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public XMPPServer xmppServer(ApplicationContext appCtx) throws Exception
+	public XMPPServer xmppServer(ApplicationContext appCtx, PacketMonitor packetMonitor) throws Exception
 	{
 		ctx = appCtx;
 		
@@ -60,12 +82,24 @@ public class XMPPServerConfig
 		
 		writeSetupConfig();
 		
+		// setup the packet intercepter for message monitoring
+		InterceptorManager.getInstance().addInterceptor(packetMonitor);
+		
+		// setup the offline message listener
+		OfflineMessageStrategy.addListener(packetMonitor);
+		
+		// setup the packet intercepter for presence information
+		InterceptorManager.getInstance().addInterceptor(RemoteGroupChatCache.getInstance()); 
+		
 		final XMPPServer server = new XMPPServer();
 		
 		setAdminAcount();
 		
 		return server;
 	}
+	
+	
+
 	
 	protected void 	writeOpenFireConfig() throws Exception
 	{
@@ -145,7 +179,7 @@ public class XMPPServerConfig
         JiveGlobals.setConfigName("conf/openfire.xml");
 		
         JiveGlobals.setXMLProperty("connectionProvider.className",
-                "com.cerner.healthe.direct.im.database.DatasourceConnectionProvider");
+                "org.directtruststandards.timplus.server.database.DatasourceConnectionProvider");
 
 
         final boolean isInitialSetup = !Boolean.parseBoolean(JiveGlobals.getProperty("initialSetup"));

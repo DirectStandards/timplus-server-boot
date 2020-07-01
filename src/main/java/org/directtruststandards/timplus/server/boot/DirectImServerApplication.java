@@ -1,11 +1,11 @@
-package com.cerner.healthe.direct.im.boot;
+package org.directtruststandards.timplus.server.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.cerner.healthe.direct.im.boot", "com.cerner.healthe.direct.im.springconfig"})
+@ComponentScan({"org.directtruststandards.timplus.server.boot", "org.directtruststandards.timplus.server.springconfig"})
 public class DirectImServerApplication 
 {	
 	static {

@@ -8,10 +8,9 @@ spring:
 
   integration.jdbc.initializeSchema: ALWAYS
   
-openfire:
+timplus:
   domain: domain.com
   adminUsername: timplus
   adminPassword: timplus
 
-timplus.monitor.condition.generalConditionTimeout: 3600000
-
+  monitor.condition.generalConditionTimeout: 3600000

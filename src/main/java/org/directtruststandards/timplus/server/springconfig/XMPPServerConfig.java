@@ -7,42 +7,28 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.directtruststandards.timplus.monitor.condition.TxReleaseStrategy;
-import org.directtruststandards.timplus.monitor.condition.TxTimeoutCondition;
-import org.directtruststandards.timplus.monitor.impl.DefaultTxParser;
-import org.directtruststandards.timplus.monitor.spring.RouteComponents;
-import org.directtruststandards.timplus.monitor.spring.ScheduledRouteReaper;
-import org.directtruststandards.timplus.server.monitor.EmbeddedServerPacketMonitor;
+import org.apache.commons.lang3.StringUtils;
 import org.directtruststandards.timplus.server.monitor.RemoteGroupChatCache;
 import org.directtruststandards.timplus.server.monitor.PacketMonitor;
 import org.jivesoftware.openfire.OfflineMessageStrategy;
 import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.admin.AdminManager;
 import org.jivesoftware.openfire.domain.DomainManager;
+import org.jivesoftware.openfire.filetransfer.proxy.FileTransferProxy;
 import org.jivesoftware.openfire.interceptor.InterceptorManager;
 import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserManager;
 import org.jivesoftware.util.JiveGlobals;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.integration.aggregator.CorrelationStrategy;
-import org.springframework.integration.channel.DirectChannel;
-import org.springframework.integration.channel.QueueChannel;
-import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.dsl.MessageChannels;
-import org.springframework.integration.store.MessageGroupStore;
-import org.springframework.integration.support.locks.LockRegistry;
-import org.springframework.integration.transformer.Transformer;
-import org.springframework.messaging.MessageChannel;
 
 @Configuration
 public class XMPPServerConfig
@@ -57,14 +43,17 @@ public class XMPPServerConfig
 	@Value("${openfire.home:.}")
 	protected String openFireHome;
 	
-	@Value("${openfire.domain}")
+	@Value("${timplus.domain}")
 	protected String domain;
 	
-	@Value("${openfire.adminUsername}")
+	@Value("${timplus.adminUsername}")
 	protected String adminUsername;
 	
-	@Value("${openfire.adminPassword}")
+	@Value("${timplus.adminPassword}")
 	protected String adminPassword;
+	
+	@Value("${timplus.filetransfer.proxy.host:}")
+	protected String fileTransferProxyHost;
 	
 	@Bean
 	@ConditionalOnMissingBean
@@ -80,7 +69,14 @@ public class XMPPServerConfig
 		
 		writePlugins();
 		
+		// Setup configuration is generally not changed
+		// These are specific settings to configure the server to
+		// be compliant with the TIM+ plus
 		writeSetupConfig();
+		
+		// These are options that can be changed per server instance
+		// and are read from Spring configuration.
+		configureOptions();
 		
 		// setup the packet intercepter for message monitoring
 		InterceptorManager.getInstance().addInterceptor(packetMonitor);
@@ -251,6 +247,14 @@ public class XMPPServerConfig
 
         }
         
+	}
+	
+	protected void configureOptions()
+	{
+		if (!StringUtils.isEmpty(fileTransferProxyHost))
+			JiveGlobals.setProperty( FileTransferProxy.PROPERTY_EXTERNALIP,  fileTransferProxyHost);
+		else 
+			JiveGlobals.setProperty( FileTransferProxy.PROPERTY_EXTERNALIP,  "");
 	}
 	
 	protected void setAdminAcount()

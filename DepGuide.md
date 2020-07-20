@@ -120,6 +120,16 @@ This default configuration creates an TIM+ domain named 'domain.com', sets the d
 
 To change the default configuration, create a file named application.yml in the same directory as the timplus-server-boot jar file.  You can override the default domain, admin username/password, and database connection using the same file structure as above.  To update the database connection, you may override these setting using key/value pairs for the spring.datasource entries as outline in section [5 of the spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties).
 
+### Update the File Transfer Proxy Configuration
+
+The default configuration for the file transfer proxy *stream hosts* uses all IP addresses bound all network interfaces on the server.  This is typically not useful as the default IP addresses are not generally not accessible from the public internet.  To configure the IP or hostname of the file transfer proxy server, add the following setting to the application.yml file created in the previous section and replace the value in the "<>" with your own value.
+
+```
+timplus.xmppserver.cernerdirectsupport.com: <proxy server host name or IP>
+```
+
+Note that you use multiple IP addresses or host names by separating each by a comma.
+
 ## Launch The TIM+ Server
 
 The TIM+ server is run as a standalone Java application.  To launch the server, run the following command:

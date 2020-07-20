@@ -105,14 +105,18 @@ spring:
     password: 
         
   flyway.locations: classpath:db/migration/{vendor}  
+
+  integration.jdbc.initializeSchema: ALWAYS
   
-openfire:
+timplus:
   domain: domain.com
   adminUsername: timplus
   adminPassword: timplus
+
+  monitor.condition.generalConditionTimeout: 3600000
 ```
 
-This default configuration creates an TIM+ domain named 'domain.com', sets the default admin username/password to timplus/timplus, and connects to a local file hsqldb database.  **Note:** The default domain does not necessarily need to be used for TIM+ messages as it can be disabled at a later time; however the at least one domain is requird to be configured in the system with an administration account associated with it.  Additional or replacement administrations can be configured in the admin console web application at a later time.
+This default configuration creates an TIM+ domain named 'domain.com', sets the default admin username/password to timplus/timplus, and connects to a local file hsqldb database.  **Note:** The default domain does not necessarily need to be used for TIM+ messages as it can be disabled at a later time; however the at least one domain is required to be configured in the system with an administration account associated with it.  Additional or replacement administrations can be configured in the admin console web application at a later time.
 
 To change the default configuration, create a file named application.yml in the same directory as the timplus-server-boot jar file.  You can override the default domain, admin username/password, and database connection using the same file structure as above.  To update the database connection, you may override these setting using key/value pairs for the spring.datasource entries as outline in section [5 of the spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties).
 
@@ -140,4 +144,4 @@ This will write all logging to the console.log file.
 
 You can now validate that the server is running by accessing the admin console.  By default, the admin console runs on port 9090 and can be access (on the local server) via the following URL:  http://localhost:9090/
 
-Login using the default username/password configured in your application.yml file.  At this point you are reading to continue configuring your TIM+ implementation.  Refer to the [Configuration](Configuration) guide for instructions on completing the configuration.
+Login using the default username/password configured in your application.yml file.  At this point you are ready to continue configuring your TIM+ implementation.  Refer to the [Configuration](Configuration) guide for instructions on completing the configuration.

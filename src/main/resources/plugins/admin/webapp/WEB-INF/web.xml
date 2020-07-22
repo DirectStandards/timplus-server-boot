@@ -910,9 +910,29 @@ Automatically created by Apache Tomcat JspC.
         <url-pattern>/error.jsp</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.user_002dvcard_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.user_002dvcard_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.user_002dedit_002dvcard_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.user_002dedit_002dvcard_jsp</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>org.jivesoftware.openfire.admin.user_002dcreate_jsp</servlet-name>
         <url-pattern>/user-create.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.user_002dvcard_jsp</servlet-name>
+        <url-pattern>/user-vcard.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.user_002dedit_002dvcard_jsp</servlet-name>
+        <url-pattern>/user-edit-vcard.jsp</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

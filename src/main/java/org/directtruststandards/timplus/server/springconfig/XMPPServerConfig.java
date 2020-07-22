@@ -15,6 +15,7 @@ import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.admin.AdminManager;
 import org.jivesoftware.openfire.domain.DomainManager;
 import org.jivesoftware.openfire.filetransfer.proxy.FileTransferProxy;
+import org.jivesoftware.openfire.handler.IQvCardHandler;
 import org.jivesoftware.openfire.interceptor.InterceptorManager;
 import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserManager;
@@ -54,6 +55,9 @@ public class XMPPServerConfig
 	
 	@Value("${timplus.filetransfer.proxy.host:}")
 	protected String fileTransferProxyHost;
+	
+	@Value("${timplus.vcard.allowClientSet:false}")
+	protected boolean vcardAllowClientSet;
 	
 	@Bean
 	@ConditionalOnMissingBean
@@ -251,10 +255,18 @@ public class XMPPServerConfig
 	
 	protected void configureOptions()
 	{
+		/*
+		 * File transfer proxy settings
+		 */
 		if (!StringUtils.isEmpty(fileTransferProxyHost))
 			JiveGlobals.setProperty( FileTransferProxy.PROPERTY_EXTERNALIP,  fileTransferProxyHost);
 		else 
 			JiveGlobals.setProperty( FileTransferProxy.PROPERTY_EXTERNALIP,  "");
+		
+		/*
+		 * Determines if TIM+ end points can update vCard information
+		 */
+		JiveGlobals.setProperty( IQvCardHandler.PROPERTY_ALLOW_CLIENT_SET,  Boolean.toString(vcardAllowClientSet));
 	}
 	
 	protected void setAdminAcount()

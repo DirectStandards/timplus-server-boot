@@ -137,21 +137,18 @@ public class XMPPServerConfig
 	}
 	
 	protected void writePlugins() throws Exception
-	{
-		
-		final File file = new File("plugins");
-		
-		if (!file.exists())
-		{
-			CopyResourcesFromClassPathToFilesystemDirectory("plugins", "./plugins");		
-		}
+	{			
+		CopyResourcesFromClassPathToFilesystemDirectory("plugins", "./plugins");		
 	}
 	
 	protected void CopyResourcesFromClassPathToFilesystemDirectory(String source, String dest) throws Exception
 	{
-		
+		final File checkSource = new File(source);
 		final File directory = new File(dest);
-		directory.mkdirs();
+		
+		if (!checkSource.exists())
+			directory.mkdirs();
+		
 		FileUtils.cleanDirectory(directory);
 		
 		final ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();

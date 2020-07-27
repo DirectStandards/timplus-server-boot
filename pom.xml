@@ -120,6 +120,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+	            <configuration>    
+	                <mainClass>org.directtruststandards.timplus.server.boot.DirectImServerApplication</mainClass>
+	            </configuration>				
 			</plugin>
 			<plugin>
 			   <groupId>org.apache.felix</groupId>

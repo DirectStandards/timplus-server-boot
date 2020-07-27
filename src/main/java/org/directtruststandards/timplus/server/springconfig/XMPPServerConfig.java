@@ -20,7 +20,7 @@ import org.jivesoftware.openfire.interceptor.InterceptorManager;
 import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserManager;
 import org.jivesoftware.util.JiveGlobals;
-
+import org.jivesoftware.util.crl.impl.CRLRevocationManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
@@ -58,6 +58,12 @@ public class XMPPServerConfig
 	
 	@Value("${timplus.vcard.allowClientSet:false}")
 	protected boolean vcardAllowClientSet;
+	
+	@Value("${timplus.secandtrust.crl.fileCahceLoc:}")
+	protected String crlLoc;
+	
+	@Value("${timplus.secandtrust.crl.ignoreCLRChecking:false}")
+	protected boolean ingoreCLRChecking;
 	
 	@Bean
 	@ConditionalOnMissingBean
@@ -264,6 +270,17 @@ public class XMPPServerConfig
 		 * Determines if TIM+ end points can update vCard information
 		 */
 		JiveGlobals.setProperty( IQvCardHandler.PROPERTY_ALLOW_CLIENT_SET,  Boolean.toString(vcardAllowClientSet));
+		
+		/*
+		 * Sets the CRL file cache location
+		 */
+		JiveGlobals.setProperty( CRLRevocationManager.PROPERTY_CRL_FILE_CACHE_LOC,  crlLoc);
+
+		/*
+		 * Sets the flag to ignore CRL checking
+		 */
+		JiveGlobals.setProperty( CRLRevocationManager.PROPERTY_CRL_IGNORE_CLR_CHECKING,  Boolean.toString(ingoreCLRChecking));
+
 	}
 	
 	protected void setAdminAcount()

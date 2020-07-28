@@ -59,7 +59,7 @@ public class XMPPServerConfig
 	@Value("${timplus.vcard.allowClientSet:false}")
 	protected boolean vcardAllowClientSet;
 	
-	@Value("${timplus.secandtrust.crl.fileCahceLoc:}")
+	@Value("${timplus.secandtrust.crl.fileCacheLoc:}")
 	protected String crlLoc;
 	
 	@Value("${timplus.secandtrust.crl.ignoreCLRChecking:false}")

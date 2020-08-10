@@ -566,6 +566,97 @@ Automatically created by Apache Tomcat JspC.
     </servlet>
 
     <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.certificate_002dsummary_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.certificate_002dsummary_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.certificate_002dcreate_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.certificate_002dcreate_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.certificate_002ddelete_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.certificate_002ddelete_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.certUpload_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.certUpload_jsp</servlet-class>
+	 	<multipart-config>
+		    <location>/tmp</location>
+		    <max-file-size>20848820</max-file-size>
+		    <max-request-size>418018841</max-request-size>
+		    <file-size-threshold>1048576</file-size-threshold>
+		</multipart-config>       
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.anchorUpload_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.anchorUpload_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002danchor_002dcreate_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002danchor_002dcreate_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002danchor_002ddelete_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002danchor_002ddelete_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002danchor_002dsummary_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002danchor_002dsummary_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dcreate_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dbundle_002dcreate_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dproperties_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dbundle_002dproperties_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dedit_002dform_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dbundle_002dedit_002dform_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002ddelete_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dbundle_002ddelete_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dsummary_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dbundle_002dsummary_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002dcreate_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dcircle_002dcreate_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002dproperties_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dcircle_002dproperties_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002ddelete_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dcircle_002ddelete_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002dsummary_jsp</servlet-name>
+        <servlet-class>org.jivesoftware.openfire.admin.trust_002dcircle_002dsummary_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>org.jivesoftware.openfire.admin.domain_002dedit_002dform_jsp</servlet-name>
         <servlet-class>org.jivesoftware.openfire.admin.domain_002dedit_002dform_jsp</servlet-class>
     </servlet>
@@ -1233,6 +1324,91 @@ Automatically created by Apache Tomcat JspC.
     <servlet-mapping>
         <servlet-name>org.jivesoftware.openfire.admin.server_002dprops_jsp</servlet-name>
         <url-pattern>/server-props.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.certificate_002dcreate_jsp</servlet-name>
+        <url-pattern>/certificate-create.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.certificate_002ddelete_jsp</servlet-name>
+        <url-pattern>/certificate-delete.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.certificate_002dsummary_jsp</servlet-name>
+        <url-pattern>/certificate-summary.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.certUpload_jsp</servlet-name>
+        <url-pattern>/certUpload.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.anchorUpload_jsp</servlet-name>
+        <url-pattern>/anchorUpload.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002danchor_002dcreate_jsp</servlet-name>
+        <url-pattern>/trust-anchor-create.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002danchor_002ddelete_jsp</servlet-name>
+        <url-pattern>/trust-anchor-delete.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002danchor_002dsummary_jsp</servlet-name>
+        <url-pattern>/trust-anchor-summary.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dcreate_jsp</servlet-name>
+        <url-pattern>/trust-bundle-create.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dproperties_jsp</servlet-name>
+        <url-pattern>/trust-bundle-properties.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dedit_002dform_jsp</servlet-name>
+        <url-pattern>/trust-bundle-edit-form.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002ddelete_jsp</servlet-name>
+        <url-pattern>/trust-bundle-delete.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dbundle_002dsummary_jsp</servlet-name>
+        <url-pattern>/trust-bundle-summary.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002dcreate_jsp</servlet-name>
+        <url-pattern>/trust-circle-create.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002dproperties_jsp</servlet-name>
+        <url-pattern>/trust-circle-properties.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002ddelete_jsp</servlet-name>
+        <url-pattern>/trust-circle-delete.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.jivesoftware.openfire.admin.trust_002dcircle_002dsummary_jsp</servlet-name>
+        <url-pattern>/trust-circle-summary.jsp</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

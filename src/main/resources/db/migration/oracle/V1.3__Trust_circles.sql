@@ -63,17 +63,17 @@ CREATE TABLE ofTrustCircles (
 CREATE TABLE ofTrustCircleAnchorReltn (
   trustCircleId          VARCHAR(64)     NOT NULL,
   trustAnchorId          VARCHAR(64)     NOT NULL,
-  CONSTRAINT ofTrustCircles_pk PRIMARY KEY (trustCircleId, trustAnchorId)
+  CONSTRAINT ofTrustCircleAnchorReltn_pk PRIMARY KEY (trustCircleId, trustAnchorId)
 );
 
 CREATE TABLE ofTrustCircleBundleReltn (
   trustCircleId          VARCHAR(64)     NOT NULL,
   trustBundleId          VARCHAR(64)     NOT NULL,
-  CONSTRAINT ofTrustCircles_pk PRIMARY KEY (trustCircleId, trustBundleId)
+  CONSTRAINT ofTrustCircleBundleReltn_pk PRIMARY KEY (trustCircleId, trustBundleId)
 );
 
 CREATE TABLE ofTrustCircleDomainReltn (
   trustCircleId          VARCHAR(64)     NOT NULL,
   domainName             VARCHAR(64)     NOT NULL,
-  CONSTRAINT ofTrustCircles_pk PRIMARY KEY (trustCircleId, domainName)
+  CONSTRAINT ofTrustCircleBundleReltn_pk PRIMARY KEY (trustCircleId, domainName)
 );

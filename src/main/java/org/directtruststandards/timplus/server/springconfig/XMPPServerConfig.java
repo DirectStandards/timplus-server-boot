@@ -9,10 +9,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.directtruststandards.timplus.server.monitor.RemoteGroupChatCache;
+import org.directtruststandards.timplus.common.crypto.KeyStoreProtectionManager;
+import org.directtruststandards.timplus.common.crypto.WrappableKeyProtectionManager;
 import org.directtruststandards.timplus.server.monitor.PacketMonitor;
 import org.jivesoftware.openfire.OfflineMessageStrategy;
 import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.admin.AdminManager;
+import org.jivesoftware.openfire.certificate.CertificateManager;
 import org.jivesoftware.openfire.domain.DomainManager;
 import org.jivesoftware.openfire.filetransfer.proxy.FileTransferProxy;
 import org.jivesoftware.openfire.handler.IQvCardHandler;
@@ -67,7 +70,7 @@ public class XMPPServerConfig
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public XMPPServer xmppServer(ApplicationContext appCtx, PacketMonitor packetMonitor) throws Exception
+	public XMPPServer xmppServer(ApplicationContext appCtx, PacketMonitor packetMonitor, KeyStoreProtectionManager keyStoreManager) throws Exception
 	{
 		ctx = appCtx;
 		
@@ -97,7 +100,7 @@ public class XMPPServerConfig
 		// setup the packet intercepter for presence information
 		InterceptorManager.getInstance().addInterceptor(RemoteGroupChatCache.getInstance()); 
 		
-		final XMPPServer server = new XMPPServer();
+		final XMPPServer server = new XMPPServer(keyStoreManager);
 		
 		setAdminAcount();
 		

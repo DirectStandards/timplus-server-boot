@@ -1,5 +1,7 @@
 package org.directtruststandards.timplus.server.springconfig;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
 import org.jivesoftware.openfire.filetransfer.proxy.credentials.ProxyServerCredentialManager;
@@ -32,7 +34,19 @@ public class ServerScheduledTasks
 			{
 				try
 				{
-					TrustBundleManager.getInstance().refreshBundle(bundle);
+					boolean refresh = false;
+					final Instant lastRefreshAttempt = bundle.getLastRefreshAttempt();
+					if (lastRefreshAttempt == null)
+						refresh = true;
+					else
+					{
+						final Instant now = Instant.now();
+						if (now.toEpochMilli() > lastRefreshAttempt.plus(bundle.getRefreshInterval(), ChronoUnit.HOURS).toEpochMilli())
+							refresh = true;
+					}
+					
+					if (refresh)
+						TrustBundleManager.getInstance().refreshBundle(bundle);
 				}
 				catch (Exception e)
 				{

@@ -53,7 +53,7 @@ CREATE TABLE ofTrustBundleAnchor (
 );
 CREATE INDEX ofTrustBundleAnchor_trustBundleId_idx ON ofTrustBundleAnchor (trustBundleId);
 
-CREATE TABLE ofTrustCircles (
+CREATE TABLE ofTrustCircle (
   id                     VARCHAR(64)     NOT NULL,
   circleName             VARCHAR(255)    NOT NULL,
   createTime             BIGINT          NOT NULL, 

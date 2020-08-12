@@ -47,7 +47,7 @@ public class KeyStoreProtectionMgrConfig
 	  
 	  @Bean	  
 	  @ConditionalOnMissingBean
-	  @ConditionalOnProperty(name="direct.gateway.keystore.hsmpresent", havingValue="true")
+	  @ConditionalOnProperty(name="timplus.keystore.hsmpresent", havingValue="true")
 	  public KeyStoreProtectionManager hsmKeyStoreProtectionManager()
 	  {
 		  LOGGER.info("HSM configured.  Attempting to connect to device.");
@@ -76,7 +76,7 @@ public class KeyStoreProtectionMgrConfig
 	  
 	  @Bean	  
 	  @ConditionalOnMissingBean
-	  @ConditionalOnProperty(name="direct.gateway.keystore.hsmpresent", havingValue="false", matchIfMissing=true)
+	  @ConditionalOnProperty(name="timplus.keystore.hsmpresent", havingValue="false", matchIfMissing=true)
 	  public KeyStoreProtectionManager nonHSMKeyStoreProtectionManager() throws CryptoException 
 	  {
 		  LOGGER.info("No HSM configured.");

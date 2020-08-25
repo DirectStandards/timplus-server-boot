@@ -5,6 +5,7 @@ import org.directtruststandards.timplus.common.crypto.exceptions.CryptoException
 import org.directtruststandards.timplus.common.crypto.impl.BootstrappedKeyStoreProtectionManager;
 import org.directtruststandards.timplus.common.crypto.impl.BootstrappedPKCS11Credential;
 import org.directtruststandards.timplus.common.crypto.impl.StaticCachedPKCS11TokenKeyStoreProtectionManager;
+import org.directtruststandards.timplus.common.crypto.impl.StaticPKCS11TokenKeyStoreProtectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +56,7 @@ public class KeyStoreProtectionMgrConfig
 		  try
 		  {
 			  final BootstrappedPKCS11Credential cred = new BootstrappedPKCS11Credential(keyStorePin);
-			  final StaticCachedPKCS11TokenKeyStoreProtectionManager mgr = new StaticCachedPKCS11TokenKeyStoreProtectionManager();
+			  final StaticPKCS11TokenKeyStoreProtectionManager mgr = new StaticPKCS11TokenKeyStoreProtectionManager();
 			  mgr.setCredential(cred);
 			  mgr.setKeyStoreType(keyStoreType);
 			  mgr.setKeyStoreSourceAsString(keyStoreSourceAsString);

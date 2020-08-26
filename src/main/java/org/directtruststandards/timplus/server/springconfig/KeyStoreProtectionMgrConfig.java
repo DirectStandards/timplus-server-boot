@@ -4,7 +4,6 @@ import org.directtruststandards.timplus.common.crypto.KeyStoreProtectionManager;
 import org.directtruststandards.timplus.common.crypto.exceptions.CryptoException;
 import org.directtruststandards.timplus.common.crypto.impl.BootstrappedKeyStoreProtectionManager;
 import org.directtruststandards.timplus.common.crypto.impl.BootstrappedPKCS11Credential;
-import org.directtruststandards.timplus.common.crypto.impl.StaticCachedPKCS11TokenKeyStoreProtectionManager;
 import org.directtruststandards.timplus.common.crypto.impl.StaticPKCS11TokenKeyStoreProtectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

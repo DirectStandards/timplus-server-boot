@@ -121,7 +121,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 	            <configuration>    
-	                <mainClass>org.directtruststandards.timplus.server.boot.DirectImServerApplication</mainClass>
+	                <mainClass>org.directtruststandards.timplus.server.boot.TIMPlusServerApplication</mainClass>
 	            </configuration>				
 			</plugin>
 			<plugin>

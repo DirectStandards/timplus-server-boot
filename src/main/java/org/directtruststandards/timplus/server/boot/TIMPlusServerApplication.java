@@ -7,17 +7,16 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({"org.directtruststandards.timplus.server.boot", "org.directtruststandards.timplus.server.springconfig"})
-public class DirectImServerApplication 
+public class TIMPlusServerApplication 
 {	
-	static {
-
-	    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "debug");
+	static 
+	{
 	    CryptoUtils.registerJCEProviders();
 	}
 	
 	public static void main(String[] args) 
 	{
-		SpringApplication.run(DirectImServerApplication.class, args);
+		SpringApplication.run(TIMPlusServerApplication.class, args);
 	}
 
 }

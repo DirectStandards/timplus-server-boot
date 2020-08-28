@@ -95,7 +95,7 @@ Once you have downloaded or built the TIM+ server jar file, place it an appropri
 
 ## Update the Default Configuration
 
-The TIM+ server application comes with a default configuration via an embedded bootstrap.yml file which sets a default TIM+ domain name, admin console username/password, and database connection configuration.  
+The TIM+ server application comes with a default configuration via an embedded bootstrap.yml file which sets a default TIM+ domain name, admin console username/password, database connection configuration, and other various configuration settings.  
 
 ```
 spring:
@@ -114,21 +114,35 @@ timplus:
   adminPassword: timplus
 
   monitor.condition.generalConditionTimeout: 3600000
+  vcard.allowClientSet: false
+  secandtrust.crl.ignoreCLRChecking: false
+  secandtrust.crl.fileCahceLoc:    
 ```
 
-This default configuration creates an TIM+ domain named 'domain.com', sets the default admin username/password to timplus/timplus, and connects to a local file hsqldb database.  **Note:** The default domain does not necessarily need to be used for TIM+ messages as it can be disabled at a later time; however the at least one domain is required to be configured in the system with an administration account associated with it.  Additional or replacement administrations can be configured in the admin console web application at a later time.
+This default configuration creates an TIM+ domain named 'domain.com', sets the default admin username/password to timplus/timplus, and connects to a local file hsqldb database.  **Note:** The default domain does not necessarily need to be used for TIM+ messaging (and most likely will not be) as it can be disabled at a later time; however at least one domain is required to be configured in the system with an administration account associated with it.  Additional or replacement administrations can be configured in the admin console web application at a later time.
 
-To change the default configuration, create a file named application.yml in the same directory as the timplus-server-boot jar file.  You can override the default domain, admin username/password, and database connection using the same file structure as above.  To update the database connection, you may override these setting using key/value pairs for the spring.datasource entries as outline in section [5 of the spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties).
+To change the default configuration, create a file named _application.yml_ in the same directory as the timplus-server-boot jar file.  You can override the default domain, admin username/password, database connection, and other settings using the same YAML structure as above.  To update the database connection, you may override these setting using key/value pairs for the spring.datasource entries as outline in section [5 of the spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties).
 
 ### Update the File Transfer Proxy Configuration
 
-The default configuration for the file transfer proxy *stream hosts* uses all IP addresses bound all network interfaces on the server.  This is typically not useful as the default IP addresses are not generally not accessible from the public internet.  To configure the IP or hostname of the file transfer proxy server, add the following setting to the application.yml file created in the previous section and replace the value in the "<>" with your own value.
+The default configuration for the file transfer proxy *stream hosts* uses all IP addresses bound all network interfaces on the server.  This is typically not useful as the default IP addresses are not generally accessible from the public internet.  To configure the IP or hostname of the file transfer proxy server, add the following setting to the _application.yml_ file created in the previous section and replace the value in the "<>" with your own value.
 
 ```
 timplus.xmppserver.cernerdirectsupport.com: <proxy server host name or IP>
 ```
 
-Note that you use multiple IP addresses or host names by separating each by a comma.
+**NOTE:**  You may configured multiple IP addresses or host names by separating each IP address or host name with a comma.
+
+### VCards
+
+The default configuration of the TIM+ server does not allow TIM+ client applications to update VCard information using the mechansims described in [XEP-0054](https://xmpp.org/extensions/xep-0054.html).  This is because production policies will mostly likely require VCard information to be set and updated by an authoritative source using tools such as the TIM+ server admin console.  To allow TIM+ clients to update their own VCard information, simply change the value of the _timplus.vcard.allowClientSet_ to _true_ in your _application.yml_ file.
+
+### CRLs
+
+The TIM+ specification requires that all certificates be checked for revocation before they are considered "trusted."  The TIM+ server does this by reading CRL attribute of a peer's certificate and downloads (and caches) the CRL file.  It is very possibly in the case of development and testing systems where certificates do not implement a full PKI infrastructure that CRLs may not be available or even implemented.  In these cases, the CRL checking feature can be disabled by changing the value of the _timplus.secandtrust.crl.ignoreCLRChecking_ setting to _true_ in the _application.yml_ file.  
+
+**NOTE:**  CRL checking should NOT be disabled in production systems, and doing so it technically a violation of the TIM+ specification.
+
 
 ## Launch The TIM+ Server
 

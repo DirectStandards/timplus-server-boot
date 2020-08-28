@@ -3,9 +3,9 @@
 The TIM+ server is a monolithic Spring Boot application which encapsulates a highly modified version of the Openfire XMPP Server.  The application contains both the core XMPP server that implements the TIM+ specification as well as a configuration web application that includes:
 
 * Creating TIM+ domains
-* Managing certificate and trust stores
+* Managing certificate and trust anchors
 * Creating and managing users
-* Limiting operational monitoring  
+* Limited operational monitoring  
 
 This TIM+ Spring Boot server application is not intended to be full blown, production ready implementation. Instead it is a starting point from which a production system can be derived and deployed.
 

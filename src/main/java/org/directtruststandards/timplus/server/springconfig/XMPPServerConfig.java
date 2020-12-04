@@ -292,6 +292,9 @@ public class XMPPServerConfig
     		if (!DomainManager.getInstance().isRegisteredDomain(domain))
     			DomainManager.getInstance().createDomain(domain, true);        	
         	
+        	if (adminUsername.indexOf("@") == -1)
+        		adminUsername = (adminUsername + "@" + domain.toLowerCase());
+    		
         	if (!UserManager.getInstance().isRegisteredUser(adminUsername))
         	{
             	final User adminUser = UserManager.getInstance().createUser(adminUsername, adminPassword, adminUsername, adminUsername + "@" + domain, domain);

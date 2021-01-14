@@ -1,5 +1,8 @@
 package org.directtruststandards.timplus.server.springconfig;
 
+import java.security.Provider;
+import java.security.Security;
+
 import org.directtruststandards.timplus.common.crypto.KeyStoreProtectionManager;
 import org.directtruststandards.timplus.common.crypto.exceptions.CryptoException;
 import org.directtruststandards.timplus.common.crypto.impl.BootstrappedKeyStoreProtectionManager;
@@ -65,6 +68,34 @@ public class KeyStoreProtectionMgrConfig
 			  
 			  if (Boolean.parseBoolean(initOnStart))
 				  mgr.initTokenStore();
+			  
+			  /*
+			   * If we are using an HSM, we need to make sure the HSM provider is handling
+			   * any process that requires use of the private key.
+			   */
+			  Provider prov = Security.getProvider("LunaProvider");
+			  if (prov != null)
+			  {
+				  prov.put("Alg.Alias.Signature.RSASSA-PSS", "SHA1withRSAandMGF1");
+			  }
+			  
+			  prov = Security.getProvider("SunRsaSign");
+			  if (prov != null)
+			  {
+				  prov.remove("Signature.RSASSA-PSS");
+			  }
+			  
+			  prov = Security.getProvider("SunMSCAPI");
+			  if (prov != null)
+			  {
+				  prov.remove("Signature.RSASSA-PSS");
+			  }
+			  
+			  prov = Security.getProvider("BC");
+			  if (prov != null)
+			  {
+				  prov.remove("Signature.RSASSA-PSS");
+			  }			  
 			  
 			  return mgr;
 		  }

@@ -167,16 +167,22 @@ public abstract class AbstractPacketMonitor implements PacketMonitor
 	@Override
 	public void messageStored(Message message)
 	{
-		// send an AMP message the message was stored
 		if (Log.isDebugEnabled())
 			Log.debug("Message put in offline storage: from " + message.getFrom() + " to " + message.getTo());
 
-		final RoutingTable routingTable = XMPPServer.getInstance().getRoutingTable();
-		final Packet msg = generateDeliveryAMPMessage(message, AMPDeliverCondition.Value.stored.name());
-		
-		final JID ampPacketTo = message.getFrom().asBareJID();
-		
-		routingTable.routePacket(ampPacketTo, msg, false);
+		// only send an AMP message is we are storing a MESSAGE
+		// sending an AMP for other types of messages can result in infinite message loops
+		final Tx tx = parser.parseStanza(message.toXML());
+		if (tx != null && tx.getStanzaType() != TxStanzaType.MESSAGE)
+		{
+			
+			final RoutingTable routingTable = XMPPServer.getInstance().getRoutingTable();
+			final Packet msg = generateDeliveryAMPMessage(message, AMPDeliverCondition.Value.stored.name());
+			
+			final JID ampPacketTo = message.getFrom().asBareJID();
+			
+			routingTable.routePacket(ampPacketTo, msg, false);
+		}
 	}
 
 

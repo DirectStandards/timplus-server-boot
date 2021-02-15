@@ -9,11 +9,14 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.directtruststandards.timplus.server.monitor.RemoteGroupChatCache;
+import org.directtruststandards.timplus.cluster.routing.DelegatedRemotePacketRouterFactory;
 import org.directtruststandards.timplus.common.crypto.KeyStoreProtectionManager;
 import org.directtruststandards.timplus.server.monitor.PacketMonitor;
 import org.jivesoftware.openfire.OfflineMessageStrategy;
+import org.jivesoftware.openfire.RemotePacketRouter;
 import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.admin.AdminManager;
+import org.jivesoftware.openfire.cluster.ClusterManager;
 import org.jivesoftware.openfire.domain.DomainManager;
 import org.jivesoftware.openfire.filetransfer.proxy.FileTransferProxy;
 import org.jivesoftware.openfire.handler.IQvCardHandler;
@@ -22,6 +25,8 @@ import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserManager;
 import org.jivesoftware.util.JiveGlobals;
 import org.jivesoftware.util.crl.impl.CRLRevocationManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
@@ -35,12 +40,15 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 @Configuration
 public class XMPPServerConfig
 {
+	private static final Logger LOGGER = LoggerFactory.getLogger(XMPPServerConfig.class);	
+	
 	protected static ApplicationContext ctx;
 	
 	protected static final String OPENFIRE_HOME_PROP = "openfireHome";
 	
 	protected static final String OPENFIRE_TEMPLATES_LOC = "/confTemplates/";
-	
+
+	protected static final String REMOTE_PACKET_ROUTER_NAME = "routing.clustering.remotepacketrouter.class";
 	
 	@Value("${openfire.home:.}")
 	protected String openFireHome;
@@ -66,7 +74,10 @@ public class XMPPServerConfig
 	@Value("${timplus.secandtrust.crl.ignoreCLRChecking:false}")
 	protected boolean ingoreCLRChecking;
 	
-	@Bean
+	@Value("${timplus.server.enableClustering:false}")
+	protected boolean enableClustering;
+	
+	@Bean(destroyMethod="stop")
 	@ConditionalOnMissingBean
 	public XMPPServer xmppServer(ApplicationContext appCtx, PacketMonitor packetMonitor, KeyStoreProtectionManager keyStoreManager) throws Exception
 	{
@@ -99,6 +110,33 @@ public class XMPPServerConfig
 		InterceptorManager.getInstance().addInterceptor(RemoteGroupChatCache.getInstance()); 
 		
 		final XMPPServer server = new XMPPServer(keyStoreManager);
+		
+		JiveGlobals.setProperty(ClusterManager.CLUSTER_PROPERTY_NAME, Boolean.toString(enableClustering));
+		
+		if (JiveGlobals.getBooleanProperty(ClusterManager.CLUSTER_PROPERTY_NAME, false))
+		{
+			LOGGER.info("Clustering is requested via configuration.  Setting up remote packet router and clustered caching.");
+			
+			// set up the remote packet router
+			final String routerFactoryClassName = JiveGlobals.getProperty(REMOTE_PACKET_ROUTER_NAME, 
+					"org.directtruststandards.timplus.cluster.routing.SCSDelegatedRemotePacketRouterFactory");
+			
+			try
+			{
+				final DelegatedRemotePacketRouterFactory packetRouterFactory = 
+					(DelegatedRemotePacketRouterFactory)Class.forName(routerFactoryClassName).newInstance();
+				
+				final RemotePacketRouter remotePacketRouter = packetRouterFactory.getInstance();
+				
+				server.getRoutingTable().setRemotePacketRouter(remotePacketRouter);
+			}
+			catch (Exception e)
+			{
+				LOGGER.error("Failed to create and set remote packet router.");
+			}
+			
+			ClusterManager.startup();
+		}
 		
 		setAdminAcount();
 		

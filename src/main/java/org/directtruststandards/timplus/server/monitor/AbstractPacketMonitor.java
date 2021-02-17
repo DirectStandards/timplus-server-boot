@@ -181,6 +181,9 @@ public abstract class AbstractPacketMonitor implements PacketMonitor
 			
 			final JID ampPacketTo = message.getFrom().asBareJID();
 			
+			if (Log.isDebugEnabled())
+				Log.debug("Generating and sending storage offline AMP packet message  from " + ampPacketTo.toString() + " to " + msg.getTo());
+			
 			routingTable.routePacket(ampPacketTo, msg, false);
 		}
 	}

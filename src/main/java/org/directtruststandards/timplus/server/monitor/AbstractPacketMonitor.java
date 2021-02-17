@@ -173,7 +173,7 @@ public abstract class AbstractPacketMonitor implements PacketMonitor
 		// only send an AMP message is we are storing a MESSAGE
 		// sending an AMP for other types of messages can result in infinite message loops
 		final Tx tx = parser.parseStanza(message.toXML());
-		if (tx != null && tx.getStanzaType() != TxStanzaType.MESSAGE)
+		if (tx != null && tx.getStanzaType() == TxStanzaType.MESSAGE)
 		{
 			
 			final RoutingTable routingTable = XMPPServer.getInstance().getRoutingTable();

@@ -111,9 +111,11 @@ public class XMPPServerConfig
 		
 		final XMPPServer server = new XMPPServer(keyStoreManager);
 		
+		LOGGER.info("Setting clustered configuration property to " + enableClustering);
+		
 		JiveGlobals.setProperty(ClusterManager.CLUSTER_PROPERTY_NAME, Boolean.toString(enableClustering));
 		
-		if (JiveGlobals.getBooleanProperty(ClusterManager.CLUSTER_PROPERTY_NAME, false))
+		if (enableClustering)
 		{
 			LOGGER.info("Clustering is requested via configuration.  Setting up remote packet router and clustered caching.");
 			
@@ -128,14 +130,17 @@ public class XMPPServerConfig
 				
 				final RemotePacketRouter remotePacketRouter = packetRouterFactory.getInstance();
 				
+				LOGGER.info("Remote packet router instance created.  Setting server routing table remote router to " + remotePacketRouter.getClass().toGenericString());
+
+				
 				server.getRoutingTable().setRemotePacketRouter(remotePacketRouter);
 			}
 			catch (Exception e)
 			{
-				LOGGER.error("Failed to create and set remote packet router.");
+				throw new IllegalStateException("Failed to create and set remote packet router.", e);
 			}
 			
-			ClusterManager.startup();
+			ClusterManager.startup();		
 		}
 		
 		setAdminAcount();

@@ -5,10 +5,10 @@ spring:
         definition: remotePacketSupplier;remotePacketConsumer
       bindings: 
         remotePacketSupplier-out-0: 
-          destination: timplus-remote-packet
+          destination: timplus-ng-remote-packet
 
         remotePacketConsumer-in-0: 
-          destination: timplus-remote-packet
+          destination: timplus-ng-remote-packet
           consumer:
             concurrency: 10    
             maxAttempts: 4

@@ -1,19 +1,35 @@
 spring:
+
   datasource:
-    url: "jdbc:hsqldb:embedded-db/openfire"
-    username: sa
-    password: 
-        
-  flyway.locations: classpath:db/migration/{vendor}  
+    #url: "jdbc:hsqldb:embedded-db/openfire"
+    #username: sa
+    #password: 
+    url: "jdbc:mysql://localhost:3306/nhind"
+    username: nhind
+    password: nhind    
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  flyway:
+    locations: classpath:db/migration/{vendor}
 
   integration.jdbc.initializeSchema: ALWAYS
-  
+
 timplus:
   domain: domain.com
-  adminUsername: timplus
-  adminPassword: timplus
+  adminUsername: gm2552@domain.com
+  adminPassword: 1kingpuff
+  
+  monitor.condition.generalConditionTimeout: 5000
 
-  monitor.condition.generalConditionTimeout: 3600000
+  filetransfer.proxy.host: xmppserver.cernerdirectsupport.com
   vcard.allowClientSet: false
-  secandtrust.crl.ignoreCLRChecking: false
-  secandtrust.crl.fileCahceLoc:  
+  secandtrust.crl.ignoreCLRChecking: true
+  secandtrust.crl.fileCahceLoc: 
+
+  server:
+    enableClustering: true

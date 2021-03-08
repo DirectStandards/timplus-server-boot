@@ -5,6 +5,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Date;
 
+import javax.annotation.PreDestroy;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -77,11 +79,11 @@ public class XMPPServerConfig
 	@Value("${timplus.server.enableClustering:false}")
 	protected boolean enableClustering;
 	
-	@Bean(destroyMethod="stop")
+	@Bean()
 	@ConditionalOnMissingBean
 	public XMPPServer xmppServer(ApplicationContext appCtx, PacketMonitor packetMonitor, KeyStoreProtectionManager keyStoreManager) throws Exception
 	{
-		ctx = appCtx;
+		ctx = appCtx;		
 		
 		System.setProperty(OPENFIRE_HOME_PROP, openFireHome);
 		

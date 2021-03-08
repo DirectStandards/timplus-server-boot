@@ -1,7 +1,5 @@
 package org.directtruststandards.timplus.server.boot;
 
-import javax.annotation.PreDestroy;
-
 import org.directtruststandards.timplus.common.crypto.CryptoUtils;
 import org.jivesoftware.openfire.XMPPServer;
 import org.springframework.beans.factory.annotation.Autowired;

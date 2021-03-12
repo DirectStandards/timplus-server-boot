@@ -19,4 +19,4 @@ timplus:
   secandtrust.crl.fileCahceLoc: 
 
   server:
-    enableClustering: true
+    enableClustering: false

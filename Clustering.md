@@ -6,9 +6,9 @@ The TIM+ server application functions well as a stand alone instance, however, i
 
 Clustering utilizes two or more instances of the TIM+ server application working together as a single logical unit.  Each server application instance is generally run on a separate node (recommended), however this isn't necessary so as long as each server application instance is listening on different TCP ports.  The server applications utilized three components for persisting stateful information and cluster messaging:
 
-* Database:  The database stores long term persistent configuration information.  This is necessary even in a non-clustered configuration.
-* Clustered Caching:  A lot of state information is stored using caches.  In standalone mode, the TIM+ server application uses an in memory cache.  In clustered mode, the server applications uses a clustered cache configuration.  The default cache implementation uses Redis.
-* Clustered Messaging: When in clustered mode, client and remote TIM+ server connections are distributed across the nodes in the cluster.  Because messages must be delivered to client applications using their persistent connections to a discrete cluster node, messages received by one cluster node may need to be transmitted to another node for delivery to the destined clinet.  Clustered messaging allows TIM+ message to travel across nodes in the cluster to be delivered to the appropriate client application's connection.  The server application uses Spring Cloud Streams as the underlying messaging implementation and RabbitMQ and the default binding.
+* *Database*:  The database stores long term persistent configuration information.  This is necessary even in a non-clustered configuration.
+* *Clustered Caching*:  A lot of state information is stored using caches.  In standalone mode, the TIM+ server application uses an in memory cache.  In clustered mode, the server applications uses a clustered cache configuration.  The default cache implementation uses Redis.
+* *Clustered Messaging*: When in clustered mode, client and remote TIM+ server connections are distributed across the nodes in the cluster.  Because messages must be delivered to client applications using their persistent connections to a discrete cluster node, messages received by one cluster node may need to be transmitted to another node for delivery to the destined client.  Clustered messaging allows TIM+ message to travel across nodes in the cluster to be delivered to the appropriate client application's connection.  The server applications uses Spring Cloud Streams as the underlying messaging implementation and RabbitMQ and the default binding.
 
 The diagram below illustrates an example cluster of three nodes running in a data center of public cloud using MySQL, Redis, and RabbitMQ as the clustering components.  It also illustrates two client applications that are connected to two different nodes in the cluster.
 
@@ -21,12 +21,12 @@ The diagram below illustrates an example cluster of three nodes running in a dat
 To enable clustering in a server application instance, you must first indicate the server's intent to use clustering by adding the following configuration parameter to the server's application.yml or bootstrap.yml file.
 
 ```
-timplus.server.enableClustering: false
+timplus.server.enableClustering: true
 ```
 
 ### Database Configuration
 
-As mentioned in the deployment guide, the server application uses a local hsql database that is written the server's local file system.  For clustering, you will need to use a database that is accessible by multiple instances of the server across multiple nodes.  You can update your application.yml or bootstrap.yml file with properties outlined in section 5 of the [spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties) to configure the connection to your database.
+As mentioned in the deployment guide, the server application uses a local hsql database that is written to the server's local file system.  For clustering, you will need to use a database that is accessible by multiple instances of the server applciation across multiple nodes.  You can update your application.yml or bootstrap.yml file with properties outlined in section 5 of the [spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties) to configure the connection to your database.
 
 #### Example database deployment and configuration
 
@@ -42,7 +42,7 @@ If you need startup this instance of MySQL at a later time, you can run the simp
 docker start timplusmysql 
 ```
 
-Assuming you use the setting above, you can connect to the MySQL instance using the following configuration in your application.yml or bootstrap.yml file substituting in the correct ip address or node name.
+Assuming you use the example above, you can connect to the MySQL instance using the following configuration in your application.yml or bootstrap.yml file substituting in the correct ip address or node name.
 
 ```
 spring:
@@ -70,7 +70,7 @@ If you need startup this instance of Redis at a later time, you can run the simp
 docker start timplus-redis 
 ```
 
-Assuming you use the setting above, you can connect to the Redis instance using the following configuration in your application.yml or bootstrap.yml file substituting in the correct ip address or node name.
+Assuming you use the example above, you can connect to the Redis instance using the following configuration in your application.yml or bootstrap.yml file substituting in the correct ip address or node name.
 
 ```
 spring:
@@ -96,7 +96,7 @@ If you need startup this instance of RabbitMQ at a later time, you can run the s
 docker start timplus-rabbit
 ```
 
-Assuming you use the setting above, you can connect to the RabbitMQ instance using the following configuration in your application.yml or bootstrap.yml file substituting in the correct ip address or node name.
+Assuming you use the example above, you can connect to the RabbitMQ instance using the following configuration in your application.yml or bootstrap.yml file substituting in the correct ip address or node name.
 
 ```
 spring:
@@ -120,4 +120,4 @@ If you exposes each stream host (i.e. proxy server) to the internet using the se
 timplus.filetransfer.proxy.host: server1.example.com,server2.example.com,server3.example.com
 ```
 
-If you expose each the cluster as a single name or ip address using a load balancer, you only need to list this single name or ip address in your application.yml or bootstrap.yml file under the timplus.filetransfer.proxy.host setting.  In this scenario, both the file sender and receiver agree on the same stream host name to connect to, but the load balancer may connect the sender and receiver to different actual server nodes.  The TIM+ clustering logic is smart enough to detect this scenario in a clustered topology and automatically creates a logical link socket connection between the sender and receivers' nodes.  In other words, you don't need to worry about which nodes each party connect to as the cluster handles to messy cluster connection details for you.
+If you expose each node in the cluster as a single name or IP address using a load balancer, you only need to list this single name or IP address in your application.yml or bootstrap.yml file under the timplus.filetransfer.proxy.host setting.  In this scenario, both the file sender and receiver agree on the same stream host name to connect to, but the load balancer may connect the sender and receiver to different actual server nodes.  The TIM+ clustering logic is smart enough to detect this scenario in a clustered topology and automatically creates a logical link socket connection between the sender and receivers' nodes.  In other words, you don't need to worry about which nodes each party connect to as the cluster handles to messy cluster connection details for you.

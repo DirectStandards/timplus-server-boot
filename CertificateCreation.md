@@ -1,6 +1,6 @@
 # Cerificate and Trust Anchor Creation
 
-For productions environments, certificates and trust anchors are best obtained from commercial PKI services.  These services generally come with a relatively modest cost but can become prohibitive expense for testing purposes.  Tools such as openSSL can be used to generate test certificates, however they can be tedious to configure especially when needing to configure specific certificate attributes.  Although not recommended for production use, the reference implementation provides the TIMPlusCertGenerator tool for creating TIM+ compliant trust anchors and certificates.
+For productions environments, certificates and trust anchors are best obtained from commercial PKI services.  These services generally come with a relatively modest cost but can become a prohibitive expense for testing purposes.  Tools such as openSSL can be used to generate test certificates, however, they can be tedious to configure especially when needing to configure specific certificate attributes.  Although not recommended for production use, the reference implementation provides the TIMPlusCertGenerator tool for creating TIM+ compliant trust anchors and certificates.
 
 ## Certificate Jargon
 TIM+ uses X509 certificates for TLS connections and X509 certificate authorities for enforcing trust between these connection. A certificate authority is actually just a certificate with certain fields, policies, extensions. Specifically a certificate authority is a certificate that can sign subordinate certificates using its private key and has its basic constraint policy set to true. Root certificates are certificate authorities whose issuer and subfields are the same.
@@ -20,9 +20,9 @@ The following sections will walk you through creating certificate chains using t
 
 The TIMPlusCertGenerator tool can either be obtained from the maven central [repository](http://repo.maven.apache.org/maven2/org/directstandards/timplus-tools/1.0.0-SNAPSHOT/timplus-tools-1.0.0-SNAPSHOT.jar) or build it from source using the instructions [here](https://github.com/DirectStandards/timplus-ri-build/blob/master/README.md).  If building from source, the tool jar file will be found under the directory  _timplus-tools/target_ . 
 
-Once you have downloaded or built the TIMPlusCertGenerator tool jar file, place it an appropriate location on GUI based system (the TIMPlusCertGenerator is a GUI tool and won't work in a command line only environment).
+Once you have downloaded or built the TIMPlusCertGenerator tool jar file, place it an appropriate location on a GUI based system (the TIMPlusCertGenerator is a GUI tool and won't work in a command line only environment).
 
-To run the tool, run the following command in the directory where you placed the tools's jar file.
+To run the tool, run the following command in the directory where you placed the tool's jar file.
 
 ```
 java -jar timplus-tools-<version>.jar
@@ -80,15 +80,13 @@ After filling out all fields, click the create button to generate the new leaf c
 * Private key file
 * PKCS12 file.
 
-The names’ of the files are generated using the username of the email address of user level certificates or the domain name of org level certificates. For example, if a leaf certificate is generated for the email address greg@example.com, the following files are generate:
-
 The names’ of the files are generated using the domain name of the certificate. For example, if a leaf certificate is generated for the example.com, the following files are generate:
 
 ![LeafCertCreated](assets/LeafCertCreated.png)
 
-example.com.der - The public certificate file.
-example.comKey.der - The PKCS8 private key file in PCKS8 format. This is encrypted if the password field is populated.
-example.com.p12 - The PCKS12 file that contains the public certificate and private key. NOTE This file is not encrypted or password protected. It is stored in a format that can be readily imported into the TIM+ admin tool.
+* example.com.der - The public certificate file.
+* example.comKey.der - The PKCS8 private key file in PCKS8 format. This is encrypted if the password field is populated.
+* example.com.p12 - The PCKS12 file that contains the public certificate and private key. NOTE This file is not encrypted or password protected. It is stored in a format that can be readily imported into the TIM+ admin tool.
 
 ### Creating A Chain From An Existing CA
 

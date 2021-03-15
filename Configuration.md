@@ -6,4 +6,5 @@ This section assumes your TIM+ server is running and you are ready to configure 
 * [Certificates And Trust Anchors](CertificatesAndAnchors) - This section describes how create trust anchors and TIM+ compliant domain certificates.  It also describes how to configure trust anchors, trust bundles, trust circles, and certificates within the TIM+ admin console web application
 * [DNS](DNS) - This section describes how to create the necessary DNS entries to expose your TIM+ services to the public internet.
 * [Clustering](Clustering) - This section describes how to optionally configure multiple server instances to run as a single logic cluster.
+* [Misc](Misc) - This section outlines other miscellaneous configuration settings.
  

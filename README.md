@@ -15,4 +15,4 @@ This TIM+ Spring Boot server application is not intended to be full blown, produ
 This document describes the installation of the TIM+ server and steps for configuring the TIM+ implementation. 
 
 * [Deployment Guide](DepGuide) - This section describes how to deploy the TIM+ server.
-* [Deployment Configuration](Configuration) - This section describes how to configure TIM+ service and perform operations such as configuring DNS, installing certificates, creating domains, and creating users.
+* [Deployment Configuration](Configuration) - This section describes how to configure TIM+ service and perform operations such as configuring DNS, installing certificates, creating domains, and creating users.  Chronologically, these configuration steps should be performed after completing the steps in the deployment guide.

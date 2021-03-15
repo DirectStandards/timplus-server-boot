@@ -30,5 +30,7 @@ To create a new user, click the 'Create New User' link on the left side of page.
 
 ![CreateUser](assets/CreateUser.png)
 
-At this point, the user should be able to login to the TIM+ server with a compliant TIM+ client.  **NOTE:**  Some XMPP server allow users to be created through XMPP client in-band registration as outline in [XEP-0077](https://xmpp.org/extensions/xep-0077.html).  The TIM+ reference implementation explicitly disables in-band registration and requires an administrator to create the user.
+At this point, the user should be able to login to the TIM+ server with a compliant TIM+ client.  
+
+**NOTE:**  Some XMPP server allow users to be created through XMPP client in-band registration as outline in [XEP-0077](https://xmpp.org/extensions/xep-0077.html).  The TIM+ reference implementation explicitly disables in-band registration and requires an administrator to create the user.
 

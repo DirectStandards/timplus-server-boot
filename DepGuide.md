@@ -87,7 +87,7 @@ echo "export JAVA_HOME=$JAVA_HOME" | sudo tee -a /etc/environment
 
 ##  Obtain Reference Implementation Spring Boot Server
 
-The TIM+ server is packaged as a single jar file which contains a monolithic Spring Boot application.  Download the latest version application fromthe  maven central repository [repository](http://repo.maven.apache.org/maven2/org/directstandards/timplus-server-boot/1.0.0-SNAPSHOT/timplus-server-boot-1.0.0-SNAPSHOT.jar).  **Note:** The maven central repository may black list some IP ranges such as virutal machines running in the Amazon EC2 cloud. Use the Sonatype repository if you are blocked from the maven central repository.
+The TIM+ server is packaged as a single jar file which contains a monolithic Spring Boot application.  Download the latest version application from the  maven central [repository](http://repo.maven.apache.org/maven2/org/directstandards/timplus-server-boot/1.0.0-SNAPSHOT/timplus-server-boot-1.0.0-SNAPSHOT.jar).  **Note:** The maven central repository may black list some IP ranges such as virutal machines running in the Amazon EC2 cloud. Use the Sonatype repository if you are blocked from the maven central repository.
 
 Optionally you may build the TIM+ server from source using instruction [here](https://github.com/DirectStandards/timplus-ri-build/blob/master/README.md).
 
@@ -95,7 +95,7 @@ Once you have downloaded or built the TIM+ server jar file, place it an appropri
 
 ## Update the Default Configuration
 
-The TIM+ server application comes with a default configuration via an embedded bootstrap.yml file which sets a default TIM+ domain name, admin console username/password, database connection configuration, and other various configuration settings.  
+The TIM+ server application comes with a default configuration via an embedded bootstrap.yml file which sets a default TIM+ domain name, admin console username/password, database connection configuration, clustering, and other various configuration settings.  
 
 ```
 spring:
@@ -117,18 +117,21 @@ timplus:
   vcard.allowClientSet: false
   secandtrust.crl.ignoreCLRChecking: false
   secandtrust.crl.fileCahceLoc:    
+  
+  server:
+    enableClustering: false  
 ```
 
-This default configuration creates an TIM+ domain named 'domain.com', sets the default admin username/password to timplus/timplus, and connects to a local file hsqldb database.  **Note:** The default domain does not necessarily need to be used for TIM+ messaging (and most likely will not be) as it can be disabled at a later time; however at least one domain is required to be configured in the system with an administration account associated with it.  Additional or replacement administrations can be configured in the admin console web application at a later time.
+This default configuration creates an TIM+ domain named 'domain.com', sets the default admin username/password to timplus@domain.com/timplus, and connects to a local file hsqldb database.  **Note:** The default domain does not necessarily need to be used for TIM+ messaging (and most likely will not be) as it can be disabled at a later time; however at least one domain is required to be configured in the system with an administration account associated with it.  Additional or replacement administrations can be configured in the admin console web application at a later time.
 
 To change the default configuration, create a file named _application.yml_ in the same directory as the timplus-server-boot jar file.  You can override the default domain, admin username/password, database connection, and other settings using the same YAML structure as above.  To update the database connection, you may override these setting using key/value pairs for the spring.datasource entries as outline in section [5 of the spring boot appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#data-properties).
 
 ### Update the File Transfer Proxy Configuration
 
-The default configuration for the file transfer proxy *stream hosts* uses all IP addresses bound all network interfaces on the server.  This is typically not useful as the default IP addresses are not generally accessible from the public internet.  To configure the IP or hostname of the file transfer proxy server, add the following setting to the _application.yml_ file created in the previous section and replace the value in the "<>" with your own value.
+The default configuration for the file transfer proxy *stream hosts* uses all IP addresses bound to all network interfaces on the server.  This is typically not useful as the default IP addresses are not generally accessible from the public internet.  To configure the IP or hostname of the file transfer proxy server, add the following setting to the _application.yml_ file created in the previous section and replace the value in the "<>" with your own value.
 
 ```
-timplus.xmppserver.cernerdirectsupport.com: <proxy server host name or IP>
+timplus.filetransfer.proxy.host: <proxy server host name or IP>
 ```
 
 **NOTE:**  You may configured multiple IP addresses or host names by separating each IP address or host name with a comma.
@@ -153,13 +156,13 @@ The TIM+ server is run as a standalone Java application.  To launch the server, 
 **NOTE:** The Windows version does not current support running as a background service.
 
 ```
-java -jar direct-im-server-<version>.jar
+java -jar timplus-server-boot-<version>.jar
 ```
 
 *All Unix/Linux/FreeBSD*
 
 ```
-java -Dworking.directory=.  -jar direct-im-server-<version>.jar > console.log 2>&1  &
+java -Dworking.directory=.  -jar timplus-server-boot-<version>.jar > console.log 2>&1  &
 ```
 
 This will write all logging to the console.log file.
@@ -168,4 +171,6 @@ This will write all logging to the console.log file.
 
 You can now validate that the server is running by accessing the admin console.  By default, the admin console runs on port 9090 and can be access (on the local server) via the following URL:  http://localhost:9090/
 
-Login using the default username/password configured in your application.yml file.  At this point you are ready to continue configuring your TIM+ implementation.  Refer to the [Configuration](Configuration) guide for instructions on completing the configuration.
+Login using the default username/password configured in your application.yml file.  At this point you are ready to continue configuring your TIM+ implementation.  Refer to the [Configuration](Configuration) guide for instructions on completing the configuration.  
+
+**NOTE:** The admin console login username consists of the"Bare JID" of an account; i.e. user@domain.  For example, the default username to log into the admin console (assuming you don't change the initial configuration illustrated earlier in this chapter) is timplus@domain.com.

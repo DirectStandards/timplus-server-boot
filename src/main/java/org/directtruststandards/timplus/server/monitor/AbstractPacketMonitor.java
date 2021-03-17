@@ -22,6 +22,7 @@ import org.jivesoftware.openfire.interceptor.PacketRejectedException;
 import org.jivesoftware.openfire.muc.MUCRole;
 import org.jivesoftware.openfire.muc.MUCRoom;
 import org.jivesoftware.openfire.muc.MultiUserChatService;
+import org.jivesoftware.openfire.muc.spi.RemoteMUCCache;
 import org.jivesoftware.openfire.session.Session;
 import org.jivesoftware.smackx.amp.AMPDeliverCondition;
 import org.jivesoftware.smackx.amp.packet.AMPExtension;
@@ -278,7 +279,7 @@ public abstract class AbstractPacketMonitor implements PacketMonitor
         }
         else
         {
-        	return RemoteGroupChatCache.getInstance().getRemoteRoomOccupants(roomJID);
+        	return RemoteMUCCache.getInstance().getRemoteRoomOccupants(roomJID);
         }
 		
 		return retVal;
@@ -298,7 +299,7 @@ public abstract class AbstractPacketMonitor implements PacketMonitor
         }
         else
         {
-        	return RemoteGroupChatCache.getInstance().getRemoteNickNameJID(nickNameJID);
+        	return RemoteMUCCache.getInstance().getRemoteNickNameJID(nickNameJID);
         }
         			
 		return null;

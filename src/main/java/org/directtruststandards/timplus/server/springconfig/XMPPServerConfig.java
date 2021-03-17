@@ -10,7 +10,6 @@ import javax.annotation.PreDestroy;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.directtruststandards.timplus.server.monitor.RemoteGroupChatCache;
 import org.directtruststandards.timplus.cluster.routing.DelegatedRemotePacketRouterFactory;
 import org.directtruststandards.timplus.common.crypto.KeyStoreProtectionManager;
 import org.directtruststandards.timplus.server.monitor.PacketMonitor;
@@ -23,6 +22,7 @@ import org.jivesoftware.openfire.domain.DomainManager;
 import org.jivesoftware.openfire.filetransfer.proxy.FileTransferProxy;
 import org.jivesoftware.openfire.handler.IQvCardHandler;
 import org.jivesoftware.openfire.interceptor.InterceptorManager;
+import org.jivesoftware.openfire.muc.spi.RemoteMUCCache;
 import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserManager;
 import org.jivesoftware.util.JiveGlobals;
@@ -109,7 +109,7 @@ public class XMPPServerConfig
 		OfflineMessageStrategy.addListener(packetMonitor);
 		
 		// setup the packet intercepter for presence information
-		InterceptorManager.getInstance().addInterceptor(RemoteGroupChatCache.getInstance()); 
+		InterceptorManager.getInstance().addInterceptor(RemoteMUCCache.getInstance()); 
 		
 		final XMPPServer server = new XMPPServer(keyStoreManager);
 		

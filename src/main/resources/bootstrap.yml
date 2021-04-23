@@ -13,7 +13,7 @@ timplus:
   adminUsername: timplus
   adminPassword: timplus
 
-  monitor.condition.generalConditionTimeout: 3600000
+  monitor.condition.generalConditionTimeout: 180000
   vcard.allowClientSet: false
   secandtrust.crl.ignoreCLRChecking: false
   secandtrust.crl.fileCahceLoc: 

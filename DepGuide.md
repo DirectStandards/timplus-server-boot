@@ -87,7 +87,7 @@ echo "export JAVA_HOME=$JAVA_HOME" | sudo tee -a /etc/environment
 
 ##  Obtain Reference Implementation Spring Boot Server
 
-The TIM+ server is packaged as a single jar file which contains a monolithic Spring Boot application.  Download the latest version application from the  maven central [repository](http://repo.maven.apache.org/maven2/org/directstandards/timplus-server-boot/1.0.0-SNAPSHOT/timplus-server-boot-1.0.0-SNAPSHOT.jar).  **Note:** The maven central repository may black list some IP ranges such as virutal machines running in the Amazon EC2 cloud. Use the Sonatype repository if you are blocked from the maven central repository.
+The TIM+ server is packaged as a single jar file which contains a monolithic Spring Boot application.  Download the latest version application from the  maven central [repository](https://repo.maven.apache.org/maven2/org/directtruststandards/timplus-server-boot/1.0.0/timplus-server-boot-1.0.0.jar).  **Note:** The maven central repository may black list some IP ranges such as virutal machines running in the Amazon EC2 cloud. Use the Sonatype repository if you are blocked from the maven central repository.
 
 Optionally you may build the TIM+ server from source using instruction [here](https://github.com/DirectStandards/timplus-ri-build/blob/master/README.md).
 

@@ -18,7 +18,7 @@ The following sections will walk you through creating certificate chains using t
 
 ### Obtain TIMPlusCertGenerator Tool
 
-The TIMPlusCertGenerator tool can either be obtained from the maven central [repository](http://repo.maven.apache.org/maven2/org/directstandards/timplus-tools/1.0.0-SNAPSHOT/timplus-tools-1.0.0-SNAPSHOT.jar) or build it from source using the instructions [here](https://github.com/DirectStandards/timplus-ri-build/blob/master/README.md).  If building from source, the tool jar file will be found under the directory  _timplus-tools/target_ . 
+The TIMPlusCertGenerator tool can either be obtained from the maven central [repository](https://repo.maven.apache.org/maven2/org/directtruststandards/timplus-tools/1.0.0/timplus-tools-1.0.0.jar) or build it from source using the instructions [here](https://github.com/DirectStandards/timplus-ri-build/blob/master/README.md).  If building from source, the tool jar file will be found under the directory  _timplus-tools/target_ . 
 
 Once you have downloaded or built the TIMPlusCertGenerator tool jar file, place it an appropriate location on a GUI based system (the TIMPlusCertGenerator is a GUI tool and won't work in a command line only environment).
 

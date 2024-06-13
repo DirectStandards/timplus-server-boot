@@ -126,6 +126,20 @@
         <servlet-name>PluginIconServlet</servlet-name>
         <servlet-class>org.jivesoftware.openfire.container.PluginIconServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SystemPropertiesServlet</servlet-name>
+        <servlet-class>org.jivesoftware.admin.servlet.SystemPropertiesServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>SystemCacheDetailsServlet</servlet-name>
+        <servlet-class>org.jivesoftware.admin.servlet.SystemCacheDetailsServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>SecurityAuditViewerServlet</servlet-name>
+        <servlet-class>org.jivesoftware.admin.servlet.SecurityAuditViewerServlet</servlet-class>
+    </servlet>
 
     <!--@@JSPC-SERVLETS@@-->
 
@@ -147,6 +161,21 @@
     <servlet-mapping>
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SystemPropertiesServlet</servlet-name>
+        <url-pattern>/server-properties.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SecurityAuditViewerServlet</servlet-name>
+        <url-pattern>/security-audit-viewer.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SystemCacheDetailsServlet</servlet-name>
+        <url-pattern>/SystemCacheDetails.jsp</url-pattern>
     </servlet-mapping>
 
 <context-param><param-name>org.eclipse.jetty.jsp.precompiled</param-name><param-value>true</param-value></context-param>
@@ -588,7 +617,7 @@ Automatically created by Apache Tomcat JspC.
 		    <max-file-size>20848820</max-file-size>
 		    <max-request-size>418018841</max-request-size>
 		    <file-size-threshold>1048576</file-size-threshold>
-		</multipart-config>       
+		</multipart-config>
     </servlet>
 
     <servlet>
